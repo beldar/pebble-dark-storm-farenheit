@@ -20,103 +20,24 @@
                 "type": "png"
             },
             {
-                "file": "images/lightning.png",
-                "name": "LIGHTNING",
+                "file": "images/screenshot.png",
+                "menuIcon": true,
+                "name": "SCREENSHOT",
                 "type": "png"
             },
             {
-                "file": "images/num_9.png",
-                "name": "NUM_9",
-                "type": "png"
+                "file": "fonts/Myriad-Pro-Regular.ttf",
+                "name": "FONT_MYRIAD_PRO_REGULAR_12",
+                "type": "font"
             },
             {
-                "file": "images/num_8.png",
-                "name": "NUM_8",
-                "type": "png"
+                "file": "fonts/Myriad-Pro-Regular.ttf",
+                "name": "FONT_MYRIAD_PRO_REGULAR_16",
+                "type": "font"
             },
             {
-                "file": "images/num_7.png",
-                "name": "NUM_7",
-                "type": "png"
-            },
-            {
-                "file": "images/num_6.png",
-                "name": "NUM_6",
-                "type": "png"
-            },
-            {
-                "file": "images/num_5.png",
-                "name": "NUM_5",
-                "type": "png"
-            },
-            {
-                "file": "images/num_4.png",
-                "name": "NUM_4",
-                "type": "png"
-            },
-            {
-                "file": "images/num_3.png",
-                "name": "NUM_3",
-                "type": "png"
-            },
-            {
-                "file": "images/num_2.png",
-                "name": "NUM_2",
-                "type": "png"
-            },
-            {
-                "file": "images/num_1.png",
-                "name": "NUM_1",
-                "type": "png"
-            },
-            {
-                "file": "images/num_0.png",
-                "name": "NUM_0",
-                "type": "png"
-            },
-            {
-                "file": "images/clear-day.png",
-                "name": "CLEAR_DAY",
-                "type": "png"
-            },
-            {
-                "file": "images/clear-night.png",
-                "name": "CLEAR_NIGHT",
-                "type": "png"
-            },
-            {
-                "file": "images/cloudy.png",
-                "name": "CLOUDY",
-                "type": "png"
-            },
-            {
-                "file": "images/error.png",
-                "name": "ERROR",
-                "type": "png"
-            },
-            {
-                "file": "images/fog.png",
-                "name": "FOG",
-                "type": "png"
-            },
-            {
-                "file": "images/partly-cloudy-day.png",
-                "name": "PARTLY_CLOUDY_DAY",
-                "type": "png"
-            },
-            {
-                "file": "images/partly-cloudy-night.png",
-                "name": "PARTLY_CLOUDY_NIGHT",
-                "type": "png"
-            },
-            {
-                "file": "images/rain.png",
-                "name": "RAIN",
-                "type": "png"
-            },
-            {
-                "file": "images/sleet.png",
-                "name": "SLEET",
+                "file": "images/wind.png",
+                "name": "WIND",
                 "type": "png"
             },
             {
@@ -125,24 +46,103 @@
                 "type": "png"
             },
             {
-                "file": "images/wind.png",
-                "name": "WIND",
+                "file": "images/sleet.png",
+                "name": "SLEET",
                 "type": "png"
             },
             {
-                "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_MYRIAD_PRO_REGULAR_16",
-                "type": "font"
+                "file": "images/rain.png",
+                "name": "RAIN",
+                "type": "png"
             },
             {
-                "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_MYRIAD_PRO_REGULAR_12",
-                "type": "font"
+                "file": "images/partly-cloudy-night.png",
+                "name": "PARTLY_CLOUDY_NIGHT",
+                "type": "png"
             },
             {
-                "file": "images/screenshot.png",
-                "menuIcon": true,
-                "name": "SCREENSHOT",
+                "file": "images/partly-cloudy-day.png",
+                "name": "PARTLY_CLOUDY_DAY",
+                "type": "png"
+            },
+            {
+                "file": "images/fog.png",
+                "name": "FOG",
+                "type": "png"
+            },
+            {
+                "file": "images/error.png",
+                "name": "ERROR",
+                "type": "png"
+            },
+            {
+                "file": "images/cloudy.png",
+                "name": "CLOUDY",
+                "type": "png"
+            },
+            {
+                "file": "images/clear-night.png",
+                "name": "CLEAR_NIGHT",
+                "type": "png"
+            },
+            {
+                "file": "images/clear-day.png",
+                "name": "CLEAR_DAY",
+                "type": "png"
+            },
+            {
+                "file": "images/num_0.png",
+                "name": "NUM_0",
+                "type": "png"
+            },
+            {
+                "file": "images/num_1.png",
+                "name": "NUM_1",
+                "type": "png"
+            },
+            {
+                "file": "images/num_2.png",
+                "name": "NUM_2",
+                "type": "png"
+            },
+            {
+                "file": "images/num_3.png",
+                "name": "NUM_3",
+                "type": "png"
+            },
+            {
+                "file": "images/num_4.png",
+                "name": "NUM_4",
+                "type": "png"
+            },
+            {
+                "file": "images/num_5.png",
+                "name": "NUM_5",
+                "type": "png"
+            },
+            {
+                "file": "images/num_6.png",
+                "name": "NUM_6",
+                "type": "png"
+            },
+            {
+                "file": "images/num_7.png",
+                "name": "NUM_7",
+                "type": "png"
+            },
+            {
+                "file": "images/num_8.png",
+                "name": "NUM_8",
+                "type": "png"
+            },
+            {
+                "file": "images/num_9.png",
+                "name": "NUM_9",
+                "type": "png"
+            },
+            {
+                "file": "images/lightning.png",
+                "name": "LIGHTNING",
                 "type": "png"
             }
         ]

@@ -44,7 +44,7 @@ function getCurrentWeather (lon, lat) {
 
             send.icon = icon;
             
-            send.temperature_f = Number(response.currently.temperature).toFixed(0);
+            send.temperature_f = Number(FtoC(response.currently.temperature)).toFixed(0);//Number(response.currently.temperature).toFixed(0);
             send.temperature_c = Number(FtoC(response.currently.temperature)).toFixed(0);
               console.log('Farenheit: '+send.temperature_f);
               console.log('Celsius: '+send.temperature_c);

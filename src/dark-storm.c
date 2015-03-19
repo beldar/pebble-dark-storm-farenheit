@@ -2,19 +2,26 @@
 
 static Window *window;
 TextLayer *text_date_layer;
+TextLayer *text_datenumber_layer;
 TextLayer *text_time_layer;
 TextLayer *text_temp_layer;
 TextLayer *text_batt_layer;
+Layer *layer;
 GFont *font12;
 GFont *font16;
 
 #define NUMBER_OF_IMAGES 11
 static GBitmap *image = NULL;
 static BitmapLayer *image_layer;
+static GBitmap *batt_image = NULL;
+static BitmapLayer *batt_image_layer;
+static int BatCharge = 0;
 
 #define TOTAL_TIME_DIGITS 4
 static GBitmap *s_time_digits[TOTAL_TIME_DIGITS];
 static BitmapLayer *s_time_digits_layers[TOTAL_TIME_DIGITS];
+
+#define RIGHT_COLUMN_WIDTH 36
 
 const int IMAGE_RESOURCE_IDS[NUMBER_OF_IMAGES] = {
   RESOURCE_ID_CLEAR_DAY,
@@ -76,16 +83,27 @@ void in_received_handler(DictionaryIterator *received, void *context) {
     Layer *window_layer = window_get_root_layer(window);
 
     image = gbitmap_create_with_resource(IMAGE_RESOURCE_IDS[id]);
-    image_layer = bitmap_layer_create(GRect(10, 100, 60, 60));
+    image_layer = bitmap_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 44, RIGHT_COLUMN_WIDTH, RIGHT_COLUMN_WIDTH));
+    bitmap_layer_set_alignment(image_layer, GAlignCenter);
     bitmap_layer_set_bitmap(image_layer, image);
     layer_add_child(window_layer, bitmap_layer_get_layer(image_layer));
   }
+}
+static void battery_draw(Layer *layer, GContext* ctx) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery draw %d", BatCharge);
+  layer_set_frame(layer, GRect(8, 154, BatCharge, 8));
+  GRect bounds = layer_get_bounds(layer);
+  graphics_context_set_fill_color(ctx, GColorWhite);
+  graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 }
 
 void handle_battery(BatteryChargeState charge) {
     static char buf[] = "123";
     snprintf(buf, sizeof(buf), "%d", charge.charge_percent);
     text_layer_set_text(text_batt_layer, strcat(buf, "%"));
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery charge %d", charge.charge_percent);
+    BatCharge = (int) charge.charge_percent;
+    layer_mark_dirty(layer);
 }
 
 static void window_load(Window *window) {
@@ -96,23 +114,23 @@ static void window_load(Window *window) {
 
 
   // create date layer - this is where the date goes
-  text_date_layer = text_layer_create(GRect(144-32, 6, 32, 20));
-  text_layer_set_text_alignment(text_date_layer, GTextAlignmentRight);
+  text_date_layer = text_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 6, RIGHT_COLUMN_WIDTH, 20));
+  text_layer_set_text_alignment(text_date_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_date_layer, GColorWhite);
   text_layer_set_background_color(text_date_layer, GColorClear);
   text_layer_set_font(text_date_layer, font12);
   layer_add_child(window_layer, text_layer_get_layer(text_date_layer));
   
   // create date number layer - this is where the date goes
-  text_date_layer = text_layer_create(GRect(144-32, 40, 32, 20));
-  text_layer_set_text_alignment(text_date_layer, GTextAlignmentRight);
-  text_layer_set_text_color(text_date_layer, GColorWhite);
-  text_layer_set_background_color(text_date_layer, GColorClear);
-  text_layer_set_font(text_date_layer, font16);
-  layer_add_child(window_layer, text_layer_get_layer(text_date_layer));
+  text_datenumber_layer = text_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 20, RIGHT_COLUMN_WIDTH, 20));
+  text_layer_set_text_alignment(text_datenumber_layer, GTextAlignmentCenter);
+  text_layer_set_text_color(text_datenumber_layer, GColorWhite);
+  text_layer_set_background_color(text_datenumber_layer, GColorClear);
+  text_layer_set_font(text_datenumber_layer, font16);
+  layer_add_child(window_layer, text_layer_get_layer(text_datenumber_layer));
     
   // create batery layer
-  text_batt_layer = text_layer_create(GRect(168-6, 120, 20, 10));
+  text_batt_layer = text_layer_create(GRect(120, 150, RIGHT_COLUMN_WIDTH-10, 20));
   text_layer_set_text_alignment(text_batt_layer, GTextAlignmentLeft);
   text_layer_set_text_color(text_batt_layer, GColorWhite);
   text_layer_set_background_color(text_batt_layer, GColorClear);
@@ -120,7 +138,8 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(text_batt_layer));
 
   // create temperature layer - this is where the temperature goes
-  text_temp_layer = text_layer_create(GRect(80, 108, 144-80, 168-108));
+  text_temp_layer = text_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 75, RIGHT_COLUMN_WIDTH, 20));
+  text_layer_set_text_alignment(text_temp_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_temp_layer, GColorWhite);
   text_layer_set_background_color(text_temp_layer, GColorClear);
   text_layer_set_font(text_temp_layer, font16);
@@ -132,6 +151,17 @@ static void window_load(Window *window) {
     s_time_digits_layers[i] = bitmap_layer_create(dummy_frame);
     layer_add_child(window_layer, bitmap_layer_get_layer(s_time_digits_layers[i]));
   }
+    
+  //Create battery background layer
+  batt_image = gbitmap_create_with_resource(RESOURCE_ID_BATTERY_EMPTY);
+  batt_image_layer = bitmap_layer_create(GRect(8, 154, 100, 8));
+  bitmap_layer_set_alignment(batt_image_layer, GAlignCenter);
+  bitmap_layer_set_bitmap(batt_image_layer, batt_image);
+  layer_add_child(window_layer, bitmap_layer_get_layer(batt_image_layer));
+    
+  layer = layer_create(GRect(8, 154, 100, 8));
+  layer_set_update_proc(layer, battery_draw);
+  layer_add_child(window_layer, layer);
     
   handle_battery(battery_state_service_peek());
   battery_state_service_subscribe(&handle_battery);
@@ -165,13 +195,10 @@ static void set_container_image(GBitmap **bmp_image, BitmapLayer *bmp_layer, con
   GBitmap *old_image = *bmp_image;
 
   *bmp_image = gbitmap_create_with_resource(resource_id);
-#ifdef PBL_PLATFORM_BASALT
-  GRect bitmap_bounds = gbitmap_get_bounds((*bmp_image));
-#else
-  GRect bitmap_bounds = (*bmp_image)->bounds;
-#endif
-  GRect frame = GRect(origin.x, origin.y, bitmap_bounds.size.w, bitmap_bounds.size.h);
+
+  GRect frame = GRect(origin.x, origin.y, 52, 72);
   bitmap_layer_set_bitmap(bmp_layer, *bmp_image);
+  bitmap_layer_set_alignment(bmp_layer, GAlignTopRight);
   layer_set_frame(bitmap_layer_get_layer(bmp_layer), frame);
 
   if (old_image != NULL) {
@@ -191,11 +218,11 @@ static unsigned short get_display_hour(unsigned short hour) {
 void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
   // Need to be static because they're used by the system later.
   static char date_text[] = "Xxx";
-  static char date_number = "00";
+  static char date_number[] = "00";
   strftime(date_text, sizeof(date_text), "%b", tick_time);
-  strftime(date_number, sizeof(date_text), "%d", tick_time);
+  strftime(date_number, sizeof(date_number), "%d", tick_time);
   text_layer_set_text(text_date_layer, date_text);
-  text_layer_set_text(text_datenumber_layer, date_text);
+  text_layer_set_text(text_datenumber_layer, date_number);
 
   unsigned short display_hour = get_display_hour(tick_time->tm_hour);
   set_container_image(&s_time_digits[0], s_time_digits_layers[0], BIG_DIGIT_IMAGE_RESOURCE_IDS[display_hour / 10], GPoint(2, 2));
@@ -204,13 +231,13 @@ void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
   set_container_image(&s_time_digits[2], s_time_digits_layers[2], BIG_DIGIT_IMAGE_RESOURCE_IDS[tick_time->tm_min / 10], GPoint(2, 76));
   set_container_image(&s_time_digits[3], s_time_digits_layers[3], BIG_DIGIT_IMAGE_RESOURCE_IDS[tick_time->tm_min % 10], GPoint(56, 76));
 
-//  if (!clock_is_24h_style()) {
-//    if (display_hour / 10 == 0) {
-//    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), true);
-//    } else {
-//    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), false);
-//    }
-//  }
+  if (!clock_is_24h_style()) {
+    if (display_hour / 10 == 0) {
+    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), true);
+    } else {
+    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), false);
+    }
+  }
 }
 
 static void init(void) {
