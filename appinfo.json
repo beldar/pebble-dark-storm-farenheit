@@ -1,0 +1,164 @@
+{
+    "appKeys": {
+        "error": 3,
+        "icon": 2,
+        "location": 4,
+        "temperature_c": 0,
+        "temperature_f": 1
+    },
+    "capabilities": [
+        "location"
+    ],
+    "companyName": "beldar",
+    "longName": "Dark Storm Watchface",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/screenshot.png",
+                "menuIcon": true,
+                "name": "SCREENSHOT",
+                "type": "png"
+            },
+            {
+                "characterRegex": "[0-9\u00ba]",
+                "file": "fonts/Myriad-Pro-Regular.ttf",
+                "name": "FONT_HELVETICA_ULTRA_LIGH_16",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9\u00ba]",
+                "file": "fonts/Myriad-Pro-Regular.ttf",
+                "name": "FONT_HELVETICA_ULTRA_LIGH_12",
+                "type": "font"
+            },
+            {
+                "file": "images/weather_icons/wind.png",
+                "name": "WIND",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/snow.png",
+                "name": "SNOW",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/sleet.png",
+                "name": "SLEET",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/rain.png",
+                "name": "RAIN",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/partly-cloudy-night.png",
+                "name": "PARTLY_CLOUDY_NIGHT",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/partly-cloudy-day.png",
+                "name": "PARTLY_CLOUDY_DAY",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/fog.png",
+                "name": "FOG",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/error.png",
+                "name": "ERROR",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/cloudy.png",
+                "name": "CLOUDY",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/clear-night.png",
+                "name": "CLEAR_NIGHT",
+                "type": "png"
+            },
+            {
+                "file": "images/weather_icons/clear-day.png",
+                "name": "CLEAR_DAY",
+                "type": "png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_0",
+                "file": "images/numbers/num_0.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_1",
+                "file": "images/numbers/num_1.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_2",
+                "file": "images/numbers/num_2.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_3",
+                "file": "images/numbers/num_3.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_4",
+                "file": "images/numbers/num_4.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_5",
+                "file": "images/numbers/num_5.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_6",
+                "file": "images/numbers/num_6.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_7",
+                "file": "images/numbers/num_7.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_8",
+                "file": "images/numbers/num_8.png"
+            },
+            {
+                "type": "png",
+                "name": "NUM_9",
+                "file": "images/numbers/num_9.png"
+            },
+            {
+                "type": "png",
+                "name": "LIGHTNING",
+                "file": "images/lightning.png"
+            },
+            {
+                "type": "png",
+                "name": "BATTERY_EMPTY",
+                "file": "images/battery_empty.png"
+            }
+        ]
+    },
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "sdkVersion": "3",
+    "shortName": "DarkStorm",
+    "uuid": "3A9F4109-1716-4B88-8410-2AE7F30E8D58",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
