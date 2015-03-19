@@ -5,9 +5,8 @@ TextLayer *text_date_layer;
 TextLayer *text_time_layer;
 TextLayer *text_temp_layer;
 TextLayer *text_batt_layer;
-GFont *font49;
-GFont *font39;
-GFont *font21;
+GFont *font12;
+GFont *font16;
 
 #define NUMBER_OF_IMAGES 11
 static GBitmap *image = NULL;
@@ -88,9 +87,8 @@ void handle_battery(BatteryChargeState charge) {
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
 
-  font49 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_HELVETICA_ULTRA_LIGH_49));
-  font39 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_HELVETICA_ULTRA_LIGH_39));
-  font21 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_HELVETICA_ULTRA_LIGH_21));
+  font12 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_MYRIAD_PRO_REGULAR_12));
+  font16 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_MYRIAD_PRO_REGULAR_16));
 
   // create time layer - this is where time goes
   text_time_layer = text_layer_create(GRect(8, 40, 144-7, 168-92));
@@ -139,9 +137,8 @@ static void window_unload(Window *window) {
   bitmap_layer_destroy(image_layer);
 
   // unload the fonts
-  fonts_unload_custom_font(font49);
-  fonts_unload_custom_font(font39);
-  fonts_unload_custom_font(font21);
+  fonts_unload_custom_font(font12);
+  fonts_unload_custom_font(font16);
     
   battery_state_service_unsubscribe();
 }

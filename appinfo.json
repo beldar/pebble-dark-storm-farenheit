@@ -21,15 +21,13 @@
                 "type": "png"
             },
             {
-                "characterRegex": "[0-9\u00ba]",
                 "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_HELVETICA_ULTRA_LIGH_16",
+                "name": "FONT_MYRIAD_PRO_REGULAR_12",
                 "type": "font"
             },
             {
-                "characterRegex": "[0-9\u00ba]",
                 "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_HELVETICA_ULTRA_LIGH_12",
+                "name": "FONT_MYRIAD_PRO_REGULAR_16",
                 "type": "font"
             },
             {
