@@ -96,7 +96,15 @@ static void window_load(Window *window) {
 
 
   // create date layer - this is where the date goes
-  text_date_layer = text_layer_create(GRect(144-32, 6, 32, 10));
+  text_date_layer = text_layer_create(GRect(144-32, 6, 32, 20));
+  text_layer_set_text_alignment(text_date_layer, GTextAlignmentRight);
+  text_layer_set_text_color(text_date_layer, GColorWhite);
+  text_layer_set_background_color(text_date_layer, GColorClear);
+  text_layer_set_font(text_date_layer, font12);
+  layer_add_child(window_layer, text_layer_get_layer(text_date_layer));
+  
+  // create date number layer - this is where the date goes
+  text_date_layer = text_layer_create(GRect(144-32, 40, 32, 20));
   text_layer_set_text_alignment(text_date_layer, GTextAlignmentRight);
   text_layer_set_text_color(text_date_layer, GColorWhite);
   text_layer_set_background_color(text_date_layer, GColorClear);
@@ -182,24 +190,27 @@ static unsigned short get_display_hour(unsigned short hour) {
 // show the date and time every minute
 void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
   // Need to be static because they're used by the system later.
-  static char date_text[] = "Xxxxxxxxx 00";
-  strftime(date_text, sizeof(date_text), "%B %e", tick_time);
+  static char date_text[] = "Xxx";
+  static char date_number = "00";
+  strftime(date_text, sizeof(date_text), "%b", tick_time);
+  strftime(date_number, sizeof(date_text), "%d", tick_time);
   text_layer_set_text(text_date_layer, date_text);
+  text_layer_set_text(text_datenumber_layer, date_text);
 
   unsigned short display_hour = get_display_hour(tick_time->tm_hour);
   set_container_image(&s_time_digits[0], s_time_digits_layers[0], BIG_DIGIT_IMAGE_RESOURCE_IDS[display_hour / 10], GPoint(2, 2));
-  set_container_image(&s_time_digits[1], s_time_digits_layers[1], BIG_DIGIT_IMAGE_RESOURCE_IDS[display_hour % 10], GPoint(54, 2));
+  set_container_image(&s_time_digits[1], s_time_digits_layers[1], BIG_DIGIT_IMAGE_RESOURCE_IDS[display_hour % 10], GPoint(56, 2));
 
-  set_container_image(&s_time_digits[2], s_time_digits_layers[2], BIG_DIGIT_IMAGE_RESOURCE_IDS[tick_time->tm_min / 10], GPoint(2, 74));
-  set_container_image(&s_time_digits[3], s_time_digits_layers[3], BIG_DIGIT_IMAGE_RESOURCE_IDS[tick_time->tm_min % 10], GPoint(54, 74));
+  set_container_image(&s_time_digits[2], s_time_digits_layers[2], BIG_DIGIT_IMAGE_RESOURCE_IDS[tick_time->tm_min / 10], GPoint(2, 76));
+  set_container_image(&s_time_digits[3], s_time_digits_layers[3], BIG_DIGIT_IMAGE_RESOURCE_IDS[tick_time->tm_min % 10], GPoint(56, 76));
 
-  if (!clock_is_24h_style()) {
-    if (display_hour / 10 == 0) {
-    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), true);
-    } else {
-    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), false);
-    }
-  }
+//  if (!clock_is_24h_style()) {
+//    if (display_hour / 10 == 0) {
+//    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), true);
+//    } else {
+//    	layer_set_hidden(bitmap_layer_get_layer(s_time_digits_layers[0]), false);
+//    }
+//  }
 }
 
 static void init(void) {
