@@ -15,15 +15,119 @@
     "resources": {
         "media": [
             {
-                "file": "images/screenshot.png",
-                "menuIcon": true,
-                "name": "SCREENSHOT",
+                "file": "images/battery_empty.png",
+                "name": "BATTERY_EMPTY",
                 "type": "png"
             },
             {
-                "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_MYRIAD_PRO_REGULAR_12",
-                "type": "font"
+                "file": "images/lightning.png",
+                "name": "LIGHTNING",
+                "type": "png"
+            },
+            {
+                "file": "images/num_9.png",
+                "name": "NUM_9",
+                "type": "png"
+            },
+            {
+                "file": "images/num_8.png",
+                "name": "NUM_8",
+                "type": "png"
+            },
+            {
+                "file": "images/num_7.png",
+                "name": "NUM_7",
+                "type": "png"
+            },
+            {
+                "file": "images/num_6.png",
+                "name": "NUM_6",
+                "type": "png"
+            },
+            {
+                "file": "images/num_5.png",
+                "name": "NUM_5",
+                "type": "png"
+            },
+            {
+                "file": "images/num_4.png",
+                "name": "NUM_4",
+                "type": "png"
+            },
+            {
+                "file": "images/num_3.png",
+                "name": "NUM_3",
+                "type": "png"
+            },
+            {
+                "file": "images/num_2.png",
+                "name": "NUM_2",
+                "type": "png"
+            },
+            {
+                "file": "images/num_1.png",
+                "name": "NUM_1",
+                "type": "png"
+            },
+            {
+                "file": "images/num_0.png",
+                "name": "NUM_0",
+                "type": "png"
+            },
+            {
+                "file": "images/clear-day.png",
+                "name": "CLEAR_DAY",
+                "type": "png"
+            },
+            {
+                "file": "images/clear-night.png",
+                "name": "CLEAR_NIGHT",
+                "type": "png"
+            },
+            {
+                "file": "images/cloudy.png",
+                "name": "CLOUDY",
+                "type": "png"
+            },
+            {
+                "file": "images/error.png",
+                "name": "ERROR",
+                "type": "png"
+            },
+            {
+                "file": "images/fog.png",
+                "name": "FOG",
+                "type": "png"
+            },
+            {
+                "file": "images/partly-cloudy-day.png",
+                "name": "PARTLY_CLOUDY_DAY",
+                "type": "png"
+            },
+            {
+                "file": "images/partly-cloudy-night.png",
+                "name": "PARTLY_CLOUDY_NIGHT",
+                "type": "png"
+            },
+            {
+                "file": "images/rain.png",
+                "name": "RAIN",
+                "type": "png"
+            },
+            {
+                "file": "images/sleet.png",
+                "name": "SLEET",
+                "type": "png"
+            },
+            {
+                "file": "images/snow.png",
+                "name": "SNOW",
+                "type": "png"
+            },
+            {
+                "file": "images/wind.png",
+                "name": "WIND",
+                "type": "png"
             },
             {
                 "file": "fonts/Myriad-Pro-Regular.ttf",
@@ -31,128 +135,24 @@
                 "type": "font"
             },
             {
-                "file": "images/weather_icons/wind.png",
-                "name": "WIND",
+                "file": "fonts/Myriad-Pro-Regular.ttf",
+                "name": "FONT_MYRIAD_PRO_REGULAR_12",
+                "type": "font"
+            },
+            {
+                "file": "images/screenshot.png",
+                "menuIcon": true,
+                "name": "SCREENSHOT",
                 "type": "png"
-            },
-            {
-                "file": "images/weather_icons/snow.png",
-                "name": "SNOW",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/sleet.png",
-                "name": "SLEET",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/rain.png",
-                "name": "RAIN",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/partly-cloudy-night.png",
-                "name": "PARTLY_CLOUDY_NIGHT",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/partly-cloudy-day.png",
-                "name": "PARTLY_CLOUDY_DAY",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/fog.png",
-                "name": "FOG",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/error.png",
-                "name": "ERROR",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/cloudy.png",
-                "name": "CLOUDY",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/clear-night.png",
-                "name": "CLEAR_NIGHT",
-                "type": "png"
-            },
-            {
-                "file": "images/weather_icons/clear-day.png",
-                "name": "CLEAR_DAY",
-                "type": "png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_0",
-                "file": "images/numbers/num_0.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_1",
-                "file": "images/numbers/num_1.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_2",
-                "file": "images/numbers/num_2.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_3",
-                "file": "images/numbers/num_3.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_4",
-                "file": "images/numbers/num_4.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_5",
-                "file": "images/numbers/num_5.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_6",
-                "file": "images/numbers/num_6.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_7",
-                "file": "images/numbers/num_7.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_8",
-                "file": "images/numbers/num_8.png"
-            },
-            {
-                "type": "png",
-                "name": "NUM_9",
-                "file": "images/numbers/num_9.png"
-            },
-            {
-                "type": "png",
-                "name": "LIGHTNING",
-                "file": "images/lightning.png"
-            },
-            {
-                "type": "png",
-                "name": "BATTERY_EMPTY",
-                "file": "images/battery_empty.png"
             }
         ]
     },
+    "sdkVersion": "3",
+    "shortName": "DarkStorm",
     "targetPlatforms": [
         "aplite",
         "basalt"
     ],
-    "sdkVersion": "3",
-    "shortName": "DarkStorm",
     "uuid": "3A9F4109-1716-4B88-8410-2AE7F30E8D58",
     "versionCode": 1,
     "versionLabel": "1.0",
