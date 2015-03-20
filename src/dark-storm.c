@@ -11,7 +11,7 @@ GFont *font18;
 GFont *font16;
 GFont *font12;
 
-#define NUMBER_OF_IMAGES 11
+#define NUMBER_OF_IMAGES 12
 static GBitmap *image = NULL;
 static BitmapLayer *image_layer;
 static GBitmap *batt_image = NULL;
@@ -39,7 +39,8 @@ const int IMAGE_RESOURCE_IDS[NUMBER_OF_IMAGES] = {
   RESOURCE_ID_SLEET,
   RESOURCE_ID_SNOW,
   RESOURCE_ID_WIND,
-  RESOURCE_ID_ERROR
+  RESOURCE_ID_ERROR,
+  RESOURCE_ID_STORM
 };
 
 static const int BIG_DIGIT_IMAGE_RESOURCE_IDS[] = {
@@ -118,6 +119,8 @@ void handle_battery(BatteryChargeState charge) {
     layer_mark_dirty(layer);
     if (charge.is_charging) {
         layer_set_hidden(bitmap_layer_get_layer(light_image_layer), false);
+    } else {
+        layer_set_hidden(bitmap_layer_get_layer(light_image_layer), true);
     }
 }
 
@@ -146,7 +149,7 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(text_datenumber_layer));
     
   // create battery layer
-  text_batt_layer = text_layer_create(GRect(118, 150, RIGHT_COLUMN_WIDTH-10, 20));
+  text_batt_layer = text_layer_create(GRect(116, 150, RIGHT_COLUMN_WIDTH, 20));
   text_layer_set_text_alignment(text_batt_layer, GTextAlignmentLeft);
   text_layer_set_text_color(text_batt_layer, GColorWhite);
   text_layer_set_background_color(text_batt_layer, GColorClear);

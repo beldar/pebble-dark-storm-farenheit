@@ -16,6 +16,11 @@
     "resources": {
         "media": [
             {
+                "file": "images/storm.png",
+                "name": "STORM",
+                "type": "png"
+            },
+            {
                 "file": "images/menu.png",
                 "menuIcon": true,
                 "name": "MENU_ICON",
@@ -37,18 +42,20 @@
                 "type": "png"
             },
             {
+                "characterRegex": "[0-9%]",
                 "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_MYRIAD_PRO_REGULAR_18",
+                "name": "FONT_MYRIAD_PRO_REGULAR_12",
                 "type": "font"
             },
             {
+                "characterRegex": "[a-zA-Z]",
                 "file": "fonts/Myriad-Pro-Regular.ttf",
                 "name": "FONT_MYRIAD_PRO_REGULAR_16",
                 "type": "font"
             },
             {
                 "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_MYRIAD_PRO_REGULAR_12",
+                "name": "FONT_MYRIAD_PRO_REGULAR_18",
                 "type": "font"
             },
             {
