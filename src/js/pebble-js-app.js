@@ -22,7 +22,7 @@ function getAndShowWeather ( ) {
     getCurrentWeather(position.coords.longitude, position.coords.latitude);
   });
 
-  setTimeout(getAndShowWeather, 300000);
+  setTimeout(getAndShowWeather, 1800000); //30 min
 }
 
 function getCurrentWeather (lon, lat) {
@@ -44,10 +44,11 @@ function getCurrentWeather (lon, lat) {
 
             send.icon = icon;
             
-            send.temperature_f = Number(FtoC(response.currently.temperature)).toFixed(0);//Number(response.currently.temperature).toFixed(0);
+            send.temperature_f = Number(response.currently.temperature).toFixed(0);//Number(response.currently.temperature).toFixed(0);
             send.temperature_c = Number(FtoC(response.currently.temperature)).toFixed(0);
-              console.log('Farenheit: '+send.temperature_f);
-              console.log('Celsius: '+send.temperature_c);
+            send.precip = (Number(response.currently.precipProbability)*100).toFixed(0);
+            console.log('Precip: '+send.precip);
+            console.log('Precip raw: '+response.currently.precipProbability);
           }
 
           Pebble.sendAppMessage(send);
@@ -67,6 +68,6 @@ function FtoC (f) {
 
 Pebble.addEventListener("ready",
   function(e) {
-    setTimeout(getAndShowWeather, 2000);
+    getAndShowWeather();
   }
 );

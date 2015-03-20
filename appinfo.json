@@ -3,7 +3,8 @@
         "error": 3,
         "icon": 2,
         "location": 4,
-        "temperature_c": 0,
+        "precip": 5,
+        "temperature_c": 6,
         "temperature_f": 1
     },
     "capabilities": [
@@ -15,24 +16,39 @@
     "resources": {
         "media": [
             {
+                "file": "images/menu.png",
+                "menuIcon": true,
+                "name": "MENU_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/screenshot.png",
+                "name": "SCREENSHOT",
+                "type": "png"
+            },
+            {
+                "file": "images/drop.png",
+                "name": "DROP",
+                "type": "png"
+            },
+            {
                 "file": "images/battery_empty.png",
                 "name": "BATTERY_EMPTY",
                 "type": "png"
             },
             {
-                "file": "images/screenshot.png",
-                "menuIcon": true,
-                "name": "SCREENSHOT",
-                "type": "png"
-            },
-            {
                 "file": "fonts/Myriad-Pro-Regular.ttf",
-                "name": "FONT_MYRIAD_PRO_REGULAR_12",
+                "name": "FONT_MYRIAD_PRO_REGULAR_18",
                 "type": "font"
             },
             {
                 "file": "fonts/Myriad-Pro-Regular.ttf",
                 "name": "FONT_MYRIAD_PRO_REGULAR_16",
+                "type": "font"
+            },
+            {
+                "file": "fonts/Myriad-Pro-Regular.ttf",
+                "name": "FONT_MYRIAD_PRO_REGULAR_12",
                 "type": "font"
             },
             {

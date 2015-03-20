@@ -3,18 +3,23 @@
 static Window *window;
 TextLayer *text_date_layer;
 TextLayer *text_datenumber_layer;
-TextLayer *text_time_layer;
 TextLayer *text_temp_layer;
 TextLayer *text_batt_layer;
+TextLayer *text_precip_layer;
 Layer *layer;
-GFont *font12;
+GFont *font18;
 GFont *font16;
+GFont *font12;
 
 #define NUMBER_OF_IMAGES 11
 static GBitmap *image = NULL;
 static BitmapLayer *image_layer;
 static GBitmap *batt_image = NULL;
 static BitmapLayer *batt_image_layer;
+static GBitmap *drop_image = NULL;
+static BitmapLayer *drop_image_layer;
+static GBitmap *light_image = NULL;
+static BitmapLayer *light_image_layer;
 static int BatCharge = 0;
 
 #define TOTAL_TIME_DIGITS 4
@@ -55,22 +60,19 @@ enum {
   WEATHER_TEMPERATURE_C,
   WEATHER_ICON,
   WEATHER_ERROR,
-  LOCATION
+  LOCATION,
+  PRECIP
 };
-
-int FtoC(int f) {
-  return (f - 32) * 5 / 9;
-}
 
 void in_received_handler(DictionaryIterator *received, void *context) {
   // incoming message received
-  Tuple *temperature = dict_find(received,WEATHER_TEMPERATURE_C);
+  Tuple *temperature = dict_find(received, 6);
+  Tuple *temperature_f = dict_find(received, 1);
   Tuple *icon = dict_find(received, WEATHER_ICON);
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Loop index now %s", temperature->value->cstring);
-  if (temperature) {
-    text_layer_set_text(text_temp_layer, strcat(temperature->value->cstring, "º"));
-  }
-
+  Tuple *precip = dict_find(received, PRECIP);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Centigrads %s", temperature->value->cstring);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Farenheit %s", temperature_f->value->cstring);
+    
   if (icon) {
     // figure out which resource to use
     int8_t id = icon->value->int8;
@@ -83,27 +85,40 @@ void in_received_handler(DictionaryIterator *received, void *context) {
     Layer *window_layer = window_get_root_layer(window);
 
     image = gbitmap_create_with_resource(IMAGE_RESOURCE_IDS[id]);
-    image_layer = bitmap_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 44, RIGHT_COLUMN_WIDTH, RIGHT_COLUMN_WIDTH));
+    image_layer = bitmap_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 46, RIGHT_COLUMN_WIDTH, RIGHT_COLUMN_WIDTH));
     bitmap_layer_set_alignment(image_layer, GAlignCenter);
     bitmap_layer_set_bitmap(image_layer, image);
     layer_add_child(window_layer, bitmap_layer_get_layer(image_layer));
   }
+    
+  if (temperature) {
+    text_layer_set_text(text_temp_layer, strcat(temperature->value->cstring, "º"));
+  }
+    
+  if (precip) {
+    layer_set_hidden(bitmap_layer_get_layer(drop_image_layer), false);
+    text_layer_set_text(text_precip_layer, precip->value->cstring);
+  }
+
 }
 static void battery_draw(Layer *layer, GContext* ctx) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery draw %d", BatCharge);
-  layer_set_frame(layer, GRect(8, 154, BatCharge, 8));
+  layer_set_frame(layer, GRect(5, 154, BatCharge, 8));
   GRect bounds = layer_get_bounds(layer);
   graphics_context_set_fill_color(ctx, GColorWhite);
   graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 }
 
 void handle_battery(BatteryChargeState charge) {
-    static char buf[] = "123";
+    static char buf[] = "12345";
     snprintf(buf, sizeof(buf), "%d", charge.charge_percent);
     text_layer_set_text(text_batt_layer, strcat(buf, "%"));
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery charge %d", charge.charge_percent);
     BatCharge = (int) charge.charge_percent;
     layer_mark_dirty(layer);
+    if (charge.is_charging) {
+        layer_set_hidden(bitmap_layer_get_layer(light_image_layer), false);
+    }
 }
 
 static void window_load(Window *window) {
@@ -111,6 +126,7 @@ static void window_load(Window *window) {
 
   font12 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_MYRIAD_PRO_REGULAR_12));
   font16 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_MYRIAD_PRO_REGULAR_16));
+  font18 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_MYRIAD_PRO_REGULAR_18));
 
 
   // create date layer - this is where the date goes
@@ -118,7 +134,7 @@ static void window_load(Window *window) {
   text_layer_set_text_alignment(text_date_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_date_layer, GColorWhite);
   text_layer_set_background_color(text_date_layer, GColorClear);
-  text_layer_set_font(text_date_layer, font12);
+  text_layer_set_font(text_date_layer, font16);
   layer_add_child(window_layer, text_layer_get_layer(text_date_layer));
   
   // create date number layer - this is where the date goes
@@ -126,11 +142,11 @@ static void window_load(Window *window) {
   text_layer_set_text_alignment(text_datenumber_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_datenumber_layer, GColorWhite);
   text_layer_set_background_color(text_datenumber_layer, GColorClear);
-  text_layer_set_font(text_datenumber_layer, font16);
+  text_layer_set_font(text_datenumber_layer, font18);
   layer_add_child(window_layer, text_layer_get_layer(text_datenumber_layer));
     
-  // create batery layer
-  text_batt_layer = text_layer_create(GRect(120, 150, RIGHT_COLUMN_WIDTH-10, 20));
+  // create battery layer
+  text_batt_layer = text_layer_create(GRect(118, 150, RIGHT_COLUMN_WIDTH-10, 20));
   text_layer_set_text_alignment(text_batt_layer, GTextAlignmentLeft);
   text_layer_set_text_color(text_batt_layer, GColorWhite);
   text_layer_set_background_color(text_batt_layer, GColorClear);
@@ -138,11 +154,11 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(text_batt_layer));
 
   // create temperature layer - this is where the temperature goes
-  text_temp_layer = text_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 75, RIGHT_COLUMN_WIDTH, 20));
+  text_temp_layer = text_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 73, RIGHT_COLUMN_WIDTH, 20));
   text_layer_set_text_alignment(text_temp_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_temp_layer, GColorWhite);
   text_layer_set_background_color(text_temp_layer, GColorClear);
-  text_layer_set_font(text_temp_layer, font16);
+  text_layer_set_font(text_temp_layer, font18);
   layer_add_child(window_layer, text_layer_get_layer(text_temp_layer));
     
   // Create time and date layers
@@ -154,14 +170,40 @@ static void window_load(Window *window) {
     
   //Create battery background layer
   batt_image = gbitmap_create_with_resource(RESOURCE_ID_BATTERY_EMPTY);
-  batt_image_layer = bitmap_layer_create(GRect(8, 154, 100, 8));
+  batt_image_layer = bitmap_layer_create(GRect(5, 154, 100, 8));
   bitmap_layer_set_alignment(batt_image_layer, GAlignCenter);
   bitmap_layer_set_bitmap(batt_image_layer, batt_image);
   layer_add_child(window_layer, bitmap_layer_get_layer(batt_image_layer));
-    
-  layer = layer_create(GRect(8, 154, 100, 8));
+  
+  //Battery fill
+  layer = layer_create(GRect(5, 154, 100, 8));
   layer_set_update_proc(layer, battery_draw);
   layer_add_child(window_layer, layer);
+    
+  //Create lightning background layer
+  light_image = gbitmap_create_with_resource(RESOURCE_ID_LIGHTNING);
+  light_image_layer = bitmap_layer_create(GRect(110, 154, 6, 10));
+  bitmap_layer_set_alignment(light_image_layer, GAlignCenter);
+  bitmap_layer_set_bitmap(light_image_layer, light_image);
+  layer_add_child(window_layer, bitmap_layer_get_layer(light_image_layer));
+  layer_set_hidden(bitmap_layer_get_layer(light_image_layer), true);
+    
+  //Create drop layer
+  drop_image = gbitmap_create_with_resource(RESOURCE_ID_DROP);
+  drop_image_layer = bitmap_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 94, RIGHT_COLUMN_WIDTH, RIGHT_COLUMN_WIDTH));
+  bitmap_layer_set_alignment(drop_image_layer, GAlignCenter);
+  bitmap_layer_set_bitmap(drop_image_layer, drop_image);
+  layer_add_child(window_layer, bitmap_layer_get_layer(drop_image_layer));
+  layer_set_hidden(bitmap_layer_get_layer(drop_image_layer), true);
+    
+  //Create precipitation layer
+  text_precip_layer = text_layer_create(GRect(144-RIGHT_COLUMN_WIDTH, 120, RIGHT_COLUMN_WIDTH, 20));
+  text_layer_set_text_alignment(text_precip_layer, GTextAlignmentCenter);
+  text_layer_set_text_color(text_precip_layer, GColorWhite);
+  text_layer_set_background_color(text_precip_layer, GColorClear);
+  text_layer_set_font(text_precip_layer, font18);
+  layer_add_child(window_layer, text_layer_get_layer(text_precip_layer));
+  
     
   handle_battery(battery_state_service_peek());
   battery_state_service_subscribe(&handle_battery);
@@ -170,18 +212,40 @@ static void window_load(Window *window) {
 static void window_unload(Window *window) {
   // destroy the text layers - this is good
   text_layer_destroy(text_date_layer);
-  text_layer_destroy(text_time_layer);
+  text_layer_destroy(text_datenumber_layer);
   text_layer_destroy(text_temp_layer);
   text_layer_destroy(text_batt_layer);
+  text_layer_destroy(text_precip_layer);
+  layer_destroy(layer);
 
   // destroy the image layers
   gbitmap_destroy(image);
   layer_remove_from_parent(bitmap_layer_get_layer(image_layer));
   bitmap_layer_destroy(image_layer);
+    
+  gbitmap_destroy(batt_image);
+  layer_remove_from_parent(bitmap_layer_get_layer(batt_image_layer));
+  bitmap_layer_destroy(batt_image_layer);
+
+  gbitmap_destroy(drop_image);
+  layer_remove_from_parent(bitmap_layer_get_layer(drop_image_layer));
+  bitmap_layer_destroy(drop_image_layer);
+    
+  gbitmap_destroy(light_image);
+  layer_remove_from_parent(bitmap_layer_get_layer(light_image_layer));
+  bitmap_layer_destroy(light_image_layer);
 
   // unload the fonts
-  fonts_unload_custom_font(font12);
+  fonts_unload_custom_font(font18);
   fonts_unload_custom_font(font16);
+  fonts_unload_custom_font(font12);
+    
+  // destroy digit numbers
+  for (int i = 0; i < TOTAL_TIME_DIGITS; i++) {
+    layer_remove_from_parent(bitmap_layer_get_layer(s_time_digits_layers[i]));
+    gbitmap_destroy(s_time_digits[i]);
+    bitmap_layer_destroy(s_time_digits_layers[i]);
+  }
     
   battery_state_service_unsubscribe();
 }
