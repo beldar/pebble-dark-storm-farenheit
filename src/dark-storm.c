@@ -93,7 +93,7 @@ void in_received_handler(DictionaryIterator *received, void *context) {
   }
     
   if (temperature) {
-    text_layer_set_text(text_temp_layer, strcat(temperature->value->cstring, "º"));
+    text_layer_set_text(text_temp_layer, strcat(temperature_f->value->cstring, "º"));
   }
     
   if (precip) {

@@ -11,7 +11,7 @@
         "location"
     ],
     "companyName": "beldar",
-    "longName": "Dark Storm Watchface",
+    "longName": "Dark Storm Farenheit",
     "projectType": "native",
     "resources": {
         "media": [
@@ -171,12 +171,12 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "DarkStorm",
+    "shortName": "Dark Storm",
     "targetPlatforms": [
         "aplite",
         "basalt"
     ],
-    "uuid": "3A9F4109-1716-4B88-8410-2AE7F30E8D58",
+    "uuid": "87948679-34FE-4AFA-BCA5-2148F57D833A",
     "versionCode": 1,
     "versionLabel": "1.0",
     "watchapp": {
